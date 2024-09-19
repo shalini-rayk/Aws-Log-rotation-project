@@ -1,0 +1,11 @@
+/home/ubuntu/log-file
+ {
+   size 0
+    rotate 1
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 640 ubuntu ubuntu
+
+}
