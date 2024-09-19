@@ -1,0 +1,33 @@
+#!/bin/bash
+#################################
+# Author : Shalini
+# Date   : 21st - Aug
+# Version : v1
+
+# This script will report the AWS report usage
+
+################################## 
+
+Define the log file path
+
+LOG_FILE="/home/ubuntu/Aws-project/log-file"
+
+{
+    echo "----- $(date '+%Y-%m-%d %H:%M:%S') -----"  # Fetching EC2 Instances
+    echo "The EC2 instances are:"
+    aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId, InstanceType}'
+
+    # Fetching S3 Buckets
+    echo "The S3 buckets are:"
+    aws s3api list-buckets | jq '.Buckets[] | {Name}'
+
+    # Fetching Lambda Functions
+    echo "The Lambda functions are:"
+    aws lambda list-functions | jq '.Functions[] | {FunctionName}'
+
+    # Fetching IAM Users
+    echo "The IAM users are:"
+    aws iam list-users | jq '.Users[] | {UserName}'
+
+    echo "----------------------------------------"
+} >> "$LOG_FILE"
